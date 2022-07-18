@@ -54,6 +54,7 @@ export default {
       const fields = form.getFields();
       const pdfFields = [];
       fields.map((field) => {
+        console.log(field);
         switch(field.constructor.name){
           case 'PDFTextField': {
             pdfFields.push({
@@ -98,7 +99,6 @@ export default {
           }
         }
       });
-      console.log(pdfFields);
       return pdfFields;
     },
     getDataFromHtml() {
@@ -109,7 +109,6 @@ export default {
           case 'text': 
           case 'select-one': {
             htmlFields.push({
-              name: el.children[i].name,
               value: el.children[i].firstChild.value.replace(/[^A-Za-z0-9\s!?]/g,''),
               id: el.children[i].getAttribute('data-annotation-id')
             });
@@ -118,7 +117,6 @@ export default {
           case 'checkbox':
           case 'radio': {
             htmlFields.push({
-              name: el.children[i].firstChild.name,
               value: el.children[i].firstChild.checked,
               id: el.children[i].getAttribute('data-annotation-id')
             });
@@ -126,7 +124,6 @@ export default {
           }
         }
       }
-      console.log(htmlFields);
       return htmlFields;
     },
     combineData(htmlData, pdfData) {
@@ -138,14 +135,12 @@ export default {
               name: pdfItem.name,
               value: htmlItem.value
             });
-          } else if (htmlItem.name === pdfItem.name) {
-            if (htmlItem.value) {
+          } else if (htmlItem.value) {
               combinedData.push({
                 name: pdfItem.name,
                 value: pdfItem.options.find(option => option.value).name
               });
             }
-          }
         });
       });
       return combinedData;
