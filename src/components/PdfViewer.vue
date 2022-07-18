@@ -197,12 +197,9 @@ export default {
 
       const formData = new FormData();
       formData.append("data", JSON.stringify(combinedData));
-      fetch("https://vue-pdfjs-server.herokuapp.com/send_data", {
-          method: 'POST',
-          body: formData,
-          headers: {
-            "Access-Control-Allow-Origin": "*"
-          }
+      fetch("/send_data", {
+        method: 'POST',
+        body: formData,
       }).then((res) => { 
           if(res.status === 200) {
             this.$emit('data-sent');
@@ -210,11 +207,8 @@ export default {
        }).catch((err) => ("Error occured on sending data", err));
     },
     getData() {
-      fetch("https://vue-pdfjs-server.herokuapp.com/get_data", {
-          method: 'GET',
-          headers: {
-            "Access-Control-Allow-Origin": "*"
-          }
+      fetch("/get_data", {
+        method: 'GET',
       }).then((res) => { 
         if(res.status === 200) {
           res.json().then((data) => {
