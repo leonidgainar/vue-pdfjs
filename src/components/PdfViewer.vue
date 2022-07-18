@@ -197,7 +197,7 @@ export default {
 
       const formData = new FormData();
       formData.append("data", JSON.stringify(combinedData));
-      fetch("/send_data", {
+      fetch("https://vue-pdfjs-server.herokuapp.com/send_data", {
         method: 'POST',
         body: formData,
       }).then((res) => { 
@@ -207,7 +207,7 @@ export default {
        }).catch((err) => ("Error occured on sending data", err));
     },
     getData() {
-      fetch("/get_data", {
+      fetch("https://vue-pdfjs-server.herokuapp.com/get_data", {
         method: 'GET',
       }).then((res) => { 
         if(res.status === 200) {
