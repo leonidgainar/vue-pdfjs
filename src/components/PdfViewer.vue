@@ -99,6 +99,7 @@ export default {
           }
         }
       });
+      console.log("pdfFields", pdfFields);
       return pdfFields;
     },
     getDataFromHtml() {
@@ -117,6 +118,7 @@ export default {
           case 'checkbox':
           case 'radio': {
             htmlFields.push({
+              name: el.children[i].firstChild.name,
               value: el.children[i].firstChild.checked,
               id: el.children[i].getAttribute('data-annotation-id')
             });
@@ -124,6 +126,7 @@ export default {
           }
         }
       }
+      console.log("htmlFields", htmlFields);
       return htmlFields;
     },
     combineData(htmlData, pdfData) {
@@ -135,12 +138,14 @@ export default {
               name: pdfItem.name,
               value: htmlItem.value
             });
-          } else if (htmlItem.value) {
+          } else if (htmlItem.name === pdfItem.name) {
+            if (htmlItem.value) {
               combinedData.push({
                 name: pdfItem.name,
                 value: pdfItem.options.find(option => option.value).name
               });
             }
+          }
         });
       });
       return combinedData;
