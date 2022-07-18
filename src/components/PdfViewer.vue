@@ -98,6 +98,7 @@ export default {
           }
         }
       });
+      console.log(pdfFields);
       return pdfFields;
     },
     getDataFromHtml() {
@@ -125,6 +126,7 @@ export default {
           }
         }
       }
+      console.log(htmlFields);
       return htmlFields;
     },
     combineData(htmlData, pdfData) {
