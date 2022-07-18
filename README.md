@@ -1,4 +1,4 @@
-# pdfvuer
+# vue-pdfjs
 
 ## Project setup
 ```
