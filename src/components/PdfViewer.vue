@@ -13,7 +13,7 @@
 <script>
 import pdfjsLib from "pdfjs-dist/build/pdf";
 import { PDFViewer } from "pdfjs-dist/web/pdf_viewer";
-import { PDFDocument } from 'pdf-lib';
+import { PDFDocument, PDFTextField, PDFCheckBox, PDFDropdown, PDFRadioGroup } from 'pdf-lib';
 import "pdfjs-dist/web/pdf_viewer.css";
 
 pdfjsLib.GlobalWorkerOptions.workerSrc =
@@ -54,34 +54,32 @@ export default {
       const fields = form.getFields();
       const pdfFields = [];
       fields.map((field) => {
-        console.log(field);
-        switch(field.constructor.name){
-          case 'PDFTextField': {
+          if (field instanceof PDFTextField) {
             pdfFields.push({
               name: field.getName(), 
               value: field.getText(), 
-               id: field.ref.tag.replace(/\s+0\s/g, '')
+              id: field.ref.tag.replace(/\s+0\s/g, '')
             });
-            break;
+            return;
           }
-          case 'PDFCheckBox': {
+          if (field instanceof PDFCheckBox) {
             pdfFields.push({
               name: field.getName(), 
               value: field.isChecked(), 
-               id: field.ref.tag.replace(/\s+0\s/g, '')
+              id: field.ref.tag.replace(/\s+0\s/g, '')
             });
-            break;
+            return;
           }
-          case 'PDFDropdown': {
+          if (field instanceof PDFDropdown) {
             pdfFields.push({
               name: field.getName(), 
               value: field.getSelected(), 
               options: field.getOptions(),
               id: field.ref.tag.replace(/\s+0\s/g, '')
             });
-            break;
+            return;
           }
-          case 'PDFRadioGroup': {
+          if (field instanceof PDFRadioGroup) {
             const options = field.getOptions();
             const selected = field.getSelected();
             const fieldOptions = options.map((option) => {
@@ -95,11 +93,9 @@ export default {
               options: fieldOptions,
               id: field.ref.tag.replace(/\s+0\s/g, '')
             });
-            break;
+            return;
           }
-        }
       });
-      console.log("pdfFields", pdfFields);
       return pdfFields;
     },
     getDataFromHtml() {
@@ -118,7 +114,6 @@ export default {
           case 'checkbox':
           case 'radio': {
             htmlFields.push({
-              name: el.children[i].firstChild.name,
               value: el.children[i].firstChild.checked,
               id: el.children[i].getAttribute('data-annotation-id')
             });
@@ -126,7 +121,6 @@ export default {
           }
         }
       }
-      console.log("htmlFields", htmlFields);
       return htmlFields;
     },
     combineData(htmlData, pdfData) {
@@ -158,20 +152,14 @@ export default {
       fields.map((field) => {
         data.forEach((item) => {
           if (field.getName() === item.name) {
-            switch(field.constructor.name){
-              case 'PDFTextField': {
-                field.setText(item.value);
-                break;
-              }
-              case 'PDFCheckBox': {
-                item.value ? field.check() : field.uncheck();
-                break;
-              }
-              case 'PDFRadioGroup': 
-              case 'PDFDropdown': {
-                field.select(item.value);
-                break;
-              }
+            if (field instanceof PDFTextField){
+              field.setText(item.value);
+            }
+            if (field instanceof PDFCheckBox){
+              item.value ? field.check() : field.uncheck();
+            }
+            if (field instanceof PDFRadioGroup || field instanceof PDFDropdown){
+              field.select(item.value);
             }
           }
         });
