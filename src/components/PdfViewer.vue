@@ -117,9 +117,16 @@ export default {
             });
             break;
           }
-          case 'checkbox':
+          case 'checkbox':{
+            htmlFields.push({
+              value: el.children[i].firstChild.checked,
+              id: el.children[i].getAttribute('data-annotation-id')
+            });
+            break;
+          }
           case 'radio': {
             htmlFields.push({
+              name: el.children[i].firstChild.name,
               value: el.children[i].firstChild.checked,
               id: el.children[i].getAttribute('data-annotation-id')
             });
@@ -155,7 +162,7 @@ export default {
       const form = pdfDoc.getForm();
       const fields = form.getFields();
       
-      fields.map((field) => {
+      fields.forEach((field) => {
         data.forEach((item) => {
           if (field.getName() === item.name) {
             if (field instanceof PDFTextField){
