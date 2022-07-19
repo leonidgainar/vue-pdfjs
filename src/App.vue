@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <input v-show="!file" ref="inputFile" type="file" accept=".pdf" @change="onFileChange">
-    <PdfViewer v-if="file" :file="file" @data-sent="onDataSent"/>
+    <PdfViewer v-if="file" :file="file" :fileName="fileName" @data-sent="onDataSent"/>
   </div>
 </template>
 
@@ -16,6 +16,7 @@ export default {
   data() {
     return {
       file: null,
+      fileName: ''
     }
   },
   methods: {
@@ -34,12 +35,14 @@ export default {
         vm.file = e.target.result;
       };
       reader.readAsDataURL(file);
+      this.fileName = file.name;
     },
     removePdf() {
       this.file = null;
+      this.fileName = '';
     },
     onDataSent() {
-      this.file = null;
+      this.removePdf();
       this.$refs.inputFile.value = null;
     },
   }

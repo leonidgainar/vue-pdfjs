@@ -28,6 +28,10 @@ export default {
       type: String,
       required: true
     },
+    fileName: {
+      type: String,
+      required: false
+    }
   },
   data() {
     return {
@@ -172,7 +176,7 @@ export default {
       const blob = new Blob([pdfBytes], { type: "application/pdf" });
       const url = URL.createObjectURL(blob);
       this.setPdfToViewer(url);
-      this.downloadFile(url, 'sample-pdf-form-filled.pdf');
+      this.downloadFile(url, this.fileName || 'sample-pdf-form-filled.pdf');
     },
     downloadFile(path, filename){
       const anchor = document.createElement('a');
