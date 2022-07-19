@@ -9,7 +9,8 @@
 - The PDF will be filled with data and downloaded
 - Refresh browser window
 
-### Live demo can be found [here](https://vue-pdfjs.netlify.app/)
+### Live demo [here](https://vue-pdfjs.netlify.app/)
+### Server repository: [vue-pdfjs-server](https://github.com/leonidgainar/vue-pdfjs-server)
 
 ## Project setup
 ```
