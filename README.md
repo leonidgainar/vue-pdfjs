@@ -17,7 +17,7 @@
 yarn install
 ```
 
-## Create .env file in the project root directory with the following content
+## Create .env.local file in root directory of the project and add the following content
 ```
 VUE_APP_API_URL=http://localhost:5000/
 ```
