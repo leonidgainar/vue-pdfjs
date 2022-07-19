@@ -17,6 +17,17 @@
 yarn install
 ```
 
+## Create .env file in the project root directory with the following content
+```
+VUE_APP_API_URL=http://localhost:5000/
+```
+## Clone [vue-pdfjs-server](https://github.com/leonidgainar/vue-pdfjs-server) repository and start the server
+```
+$ git clone git@github.com:leonidgainar/vue-pdfjs-server.git
+$ cd vue-pdfjs-server
+$ npm start
+```
+
 ### Compiles and hot-reloads for development
 ```
 yarn serve
@@ -27,10 +38,3 @@ yarn serve
 yarn build
 ```
 
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
