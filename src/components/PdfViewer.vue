@@ -19,6 +19,8 @@ import "pdfjs-dist/web/pdf_viewer.css";
 pdfjsLib.GlobalWorkerOptions.workerSrc =
   "https://cdn.jsdelivr.net/npm/pdfjs-dist@2.0.943/build/pdf.worker.min.js";
 
+const API_URL = process.env.VUE_APP_API_URL;
+
 export default {
   name: "PdfViewer",
   props: {
@@ -187,7 +189,7 @@ export default {
 
       const formData = new FormData();
       formData.append("data", JSON.stringify(combinedData));
-      fetch("https://vue-pdfjs-server.herokuapp.com/send_data", {
+      fetch(`${API_URL}send_data`, {
         method: 'POST',
         body: formData,
       }).then((res) => { 
@@ -197,7 +199,7 @@ export default {
        }).catch((err) => ("Error occured on sending data", err));
     },
     getData() {
-      fetch("https://vue-pdfjs-server.herokuapp.com/get_data", {
+      fetch(`${API_URL}get_data`, {
         method: 'GET',
       }).then((res) => { 
         if(res.status === 200) {
