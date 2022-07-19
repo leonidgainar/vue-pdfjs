@@ -9,6 +9,8 @@
 - The PDF will be filled with data and downloaded
 - Refresh browser window
 
+### Live demo can be found [here](https://vue-pdfjs.netlify.app/)
+
 ## Project setup
 ```
 yarn install
